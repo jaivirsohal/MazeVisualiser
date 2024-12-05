@@ -1,4 +1,4 @@
--Full documentation is included within the files.#
+-Full documentation is included within the files
 
 -This Project consists of a maze visualiser that shows how Prim's algorithm generates mazes.
 
