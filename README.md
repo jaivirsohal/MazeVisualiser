@@ -15,8 +15,6 @@ Preview:
 
 ![image](https://github.com/user-attachments/assets/6b40e00e-7f1d-49b3-b284-fd9b5e4edede)
 
-
-Progression of solver:
 ![image](https://github.com/user-attachments/assets/be89ef9a-554d-419c-86ef-633b359f8afb)
 
 
