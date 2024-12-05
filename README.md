@@ -13,9 +13,7 @@ Preview:
 Comparision:
 ![image](https://github.com/user-attachments/assets/419fa8f6-78ad-4d7f-bbd5-8a244f305b43)
 
-Mid generation:
-![image](https://github.com/user-attachments/assets/2aa0e1f9-dd7d-4371-a969-ccf3651af9db)
-
+![image](https://github.com/user-attachments/assets/6b40e00e-7f1d-49b3-b284-fd9b5e4edede)
 
 ![image](https://github.com/user-attachments/assets/873f2630-883b-4510-8c4f-7fd2bfdab0dc)
 
