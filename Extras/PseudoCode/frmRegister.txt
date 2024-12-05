@@ -1,0 +1,130 @@
+procedure btnSubmit()
+  //get text box values
+  userEnter = ""
+  passEnter = ""
+  passConfirm = ""
+  userEnter = tfUser.getText()
+  passEnter = tfPass.getText()
+  passConfirm = tfPass.getText()
+
+  //call validate functions
+  isUniqueUser = checkUniqueUser(userEnter)
+  isUserFormat = checkUserFormat(UserEnter)
+  isPassFormat = checkPassFormat(passEnter)
+  isPassEqual = checkEqual(passEnter, passConfirm)
+  
+  //hierarchy of validation
+  if isUniqueUser then
+    if isUserFormat then
+      if isPassEqual then
+        if isPassFormat then
+          //write details to file
+          writeToFile(userEnter + "," + passEnter + "\n")
+          //output success and return to main menu
+          tfOutput.setText("Successfully registerd!")
+          FrmRegister.close()
+          FrmLogin logn = new FrmLogin()
+        else
+          //output
+          tfOutput.setText("Passwords are not correctly formatted!")
+        endif
+      else
+        //output
+        tfOutput.setText("Passwords not equal!")
+      endif
+    else
+      //output
+      tfOutput.setText("Username of incorrect format!")
+    endif
+  else
+    //output
+    tfOutput.setText("Username already taken!")
+  endif
+endProcedure
+
+//vailidate username
+function checkUniqueUser(user)
+  //load all details  
+  details = loadDetails()
+  for i=0 to storedDetails.length
+    //split details into user AND password
+    splits = storedDetails[i].split(",")
+    //compare stored values
+    if (user == splits[0]) then
+      //returns false if username in array
+      return false
+    endif
+  next i
+  //returns true if not in array
+  return true
+endfunction
+
+function checkUserFormat(username)
+  //converts username to lowercase
+  username = username.toLower()
+  //check at least 5 char
+  if (username.length() < 5 then
+    return false
+  for i=0 to username.length()-1
+    if (NOT username[i].isDigit() OR asc(username[i])<97 OR  asc(username[i])>122) then
+       return false
+    endif
+  next i
+  //return true if end reached
+  return true
+endfunction
+
+function checkPassFormat(pass)
+  //track booleans
+  special = false
+  number = false
+  //password must be 8 in length
+  if pass.length()<8 then
+    return false
+  endif
+  //check for special char and number
+  for i=0 to pass()-1
+    if pass[i].isSpecial() then
+      special = true
+    else if pass[i].isDigit() then
+      number = true
+    endif
+  next i
+  //if password contains both special & num
+  if number && special then
+    return true
+  return false
+endfunction
+
+function checkEqual(str1, str2)
+  //check equal  
+  return str1 == str2
+endfunction
+
+function loadDetails()
+  //open file in read mode
+  myFile = openRead("login_details.txt")
+  lineNum = 0
+
+  //get number of lines
+  while NOT myFile.endOfFile()
+    lineNum = lineNum + 1
+  endwhile
+
+  //store all lines in an array
+  array details[lineNum]
+  index = 0
+  while NOT myFile.endOfFile()
+    details[index] = myFile.readLine()
+    index = index + 1
+  endwhile
+  return details
+endfunction
+
+procedure writeToFile(str)
+  //open file in write mode
+  myFile = openWrite("login_details.txt")
+  //write to and close file
+  myFile.write(str)
+  myFile.close()
+endprocedure

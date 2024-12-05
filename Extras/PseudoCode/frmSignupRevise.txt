@@ -1,0 +1,104 @@
+procedure btnSubmit()
+  //call function to check if details are valid
+  valid = checkAllValid()
+  if valid then
+    //write details to file
+    writeToFile(userEnter + "," + passEnter + "\n")
+    //output success and return to main menu
+    tfOutput.setText("Successfully registerd!")
+    FrmRegister.close()
+    FrmLogin login = new FrmLogin()
+  else
+    tfOutput.setText("Check incorrect details")
+endProcedure
+
+//check all are valid:
+function checkAllValid()
+  //get text box values
+  userEnter = ""
+  passEnter = ""
+  passConfirm = ""
+  userEnter = tfUser.getText()
+  passEnter = tfPass.getText()
+  passConfirm = tfPass.getText()
+
+  //call validate functions
+  isUniqueUser = checkUniqueUser(userEnter)
+  isUserFormat = checkUserFormat(UserEnter)
+  isPassFormat = checkPassFormat(passEnter)
+  isPassEqual = checkEqual(passEnter, passConfirm)
+  
+  //check all validation
+  return isUniqueUser AND isUserFormat AND isPassFormat AND isPassEqual
+endprocedure
+
+//vailidate username
+function checkUniqueUser(user)
+  //load all details  
+  details = loadDetails()
+  for i=0 to storedDetails.length
+    //split details into user AND password
+    splits = storedDetails[i].split(",")
+    //compare stored values
+    if (user == splits[0]) then
+      //returns false if username in array
+      return false
+    endif
+  next i
+  //output for username
+  tfUserOut.setText("Username already taken!")
+  //returns true if not in array
+  return true
+endfunction
+
+function checkUserFormat(username)
+  //converts username to lowercase
+  username = username.toLower()
+  //check at least 5 char
+  if (username.length() < 5 then
+    return false
+  for i=0 to username.length()-1
+    if (NOT username[i].isDigit() OR asc(username[i])<97 OR  asc(username[i])>122) then
+       return false
+    endif
+  next i
+  //output for username
+  tfUserOut.setText("Username of incorrect format!")
+  //return true if end reached
+  return true
+endfunction
+
+function checkPassFormat(pass)
+  //track booleans
+  special = false
+  number = false
+  //password must be 8 in length
+  if pass.length()<8 then
+    return false
+  endif
+  //check for special char and number
+  for i=0 to pass()-1
+    if pass[i].isSpecial() then
+      special = true
+    else if pass[i].isDigit() then
+      number = true
+    endif
+  next i
+  //if password contains both special AND num
+  if number AND special then
+    return true
+  //output for password
+  tfPassOut.setText("Passwords are not correctly formatted!")
+  return false
+endfunction
+
+function checkEqual(str1, str2)
+  //check equal 
+  if (str1 == str2) then
+    return true
+  else
+    //output for password
+    tfPassOut.setText("Passwords not equal!")
+    return false
+  endif
+endfunction

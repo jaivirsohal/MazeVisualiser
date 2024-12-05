@@ -1,0 +1,63 @@
+procedure AStar(maze, startX, startY, goalX, goalY)
+  //initialize the visited array, the priority queue and costs
+  visited = arr[maze.length][maze[0].length]
+  queue = PriorityQueue()
+  gScore = {}
+  hScore = {}
+  fScore = {}
+
+  //set actual cost of start to 0 and calculate heuristic cost
+  gScore[[startX, startY]] = 0
+  hScore[[startX, startY]] = heuristic(startX, startY, goalX, goalY)
+  fScore[[startX, startY]] = gScore[[startX, startY]] + hScore[[startX, startY]]
+
+  //enqueue start point into queue
+  queue.enqueue([startX, startY], fScore[[startX, startY]])
+
+  //while the queue is not empty
+  while not queue.isEmpty()
+     //dequeue and retrieve cell from the queue
+     [currentX, currentY] = queue.dequeue()
+     
+     //check if the cell is valid and unvisited
+     if currentX >= 0 and currentX < maze.length and currentY >= 0 and currentY < maze[0].length and current != visited[currentX][currentY] then
+        //mark the cell as visited
+        visited[currentX][currentY] = true
+ 
+        //if the current cell is the end, stop the search
+        if currentX == endX and currentY == endY then
+           break
+        endif
+ 
+        //try to move in all possible directions (up,down,left,right)
+        foreach direction in {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
+           newX = currentX + direction[0]
+           newY = currentY + direction[1]
+ 
+           //if the new cell is valid and unvisited, calculate its new score
+           //cost of moving to a neighbouring cell is 1
+           newGScore = gScore[[currentX, currentY]] + 1 
+           if newX >= 0 and newX < maze.length and newY >= 0 and newY < maze[0].length and new != visited[newX][newY] then
+              if new not in gScore or new not in newGScore < gScore[new] then
+                 //update the scores
+                 gScore[new] = newGScore
+                 hScore[new] = heuristic(newX, newY, endX, endY)
+                 fScore[new] = gScore[new] + hScore[new]
+ 
+                 //enqueue the new cell into the queue
+                 queue.enqueue([newX, newY], fScore[new])
+              endif
+           endif
+        next direction
+     endif
+  endwhile
+ 
+  //return the visited array (solved)
+  return visited
+endprocedure
+
+//define the heuristic function
+function heuristic(x1, y1, x2, y2)
+ //use the euclidean distance as the heuristic - simple
+ return abs(x2 - x1) + abs(y2 - y1)
+endfunction

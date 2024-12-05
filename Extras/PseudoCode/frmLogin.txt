@@ -1,0 +1,74 @@
+//global attempts variable
+attempts = 3
+
+//validate submitted details
+procedure btnSubmit()
+  //get text box values
+  userEnter = ""
+  passEnter = ""
+  userEnter = tfUser.getText()
+  passEnter = tfPass.getText()
+  
+  //validate details
+  isValid = validateDetails(userEnter, passEnter)
+
+  if isValid then
+    //close login and allow access into menus
+    FrmLogin.close()
+    frmMainMenu menu = new FrmMainMenu()
+  else
+    if attempts > 0 then
+      attempts = attempts - 1
+      tfOutput.setText("Username or Password incorrect - " + attempts + " attempts remaining")
+    else
+      //timeout user for 30 seconds if 0 attempts
+      tfOutput.setText("You have been timed out for 30 seconds")
+      Timer timer = new Timer(30000)
+      timer.start()
+      attempts = 3
+    endif
+  endif
+endprocedure
+
+//consider choice of register
+procedure btnRegister()
+  FrmLogin.close()
+  frmRegister register = new FrmRegister()
+endprocedure
+
+//validate user and password
+function validateDetails(user, pass)
+  //retrieve stored values
+  array storedDetails = loadDetails()
+
+  //validate user
+  for i=0 to storedDetails.length
+    //split details into user AND password
+    splits = storedDetails[i].split(",")
+    //compare stored values
+    if (user == splits[0] and pass == splits[1]) then
+      return true
+    endif
+  return false
+endfunction
+
+function loadDetails()
+  //open file in read mode
+  myFile = openRead("login_details.txt")
+  lineNum = 0
+
+  //get number of lines
+  while NOT myFile.endOfFile()
+    lineNum = lineNum + 1
+  endwhile
+
+  //store all lines in an array
+  array details[lineNum]
+  index = 0
+  while NOT myFile.endOfFile()
+    details[index] = myFile.readLine()
+    index = index + 1
+  endwhile
+  return details
+endfunction
+

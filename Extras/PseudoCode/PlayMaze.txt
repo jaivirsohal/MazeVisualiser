@@ -1,0 +1,56 @@
+procedure keyPressed()
+  //case for each key press
+  switch (keyEvent):
+    //up arrow press
+    case KEY.up:
+      //set directions
+      i = currentCell[0] - 1
+      j = currentCell[1]
+      //check if maze location is not a wall
+      if maze[i][j] != 1 then
+        //mark as explored
+        maze[i][j] = 2
+        //update current cell
+        currentCell = {i, j}
+      endif
+    //down arrow press
+    case KEY.down:
+      //set directions
+      i = currentCell[0] + 1
+      j = currentCell[1]
+      //check if maze location is not a wall
+      if maze[i][j] != 1 then
+        //mark as explored
+        maze[i][j] = 2
+        //update current cell
+        currentCell = {i, j}
+      endif
+    //left arrow press
+    case KEY.left:
+      //set directions
+      i = currentCell[0]
+      j = currentCell[1] - 1
+      //check if maze location is not a wall
+      if maze[i][j] != 1 then
+        //mark as explored
+        maze[i][j] = 2
+        //update current cell
+        currentCell = {i, j}
+      endif
+    //up arrow press
+    case KEY.right:
+      //set directions
+      i = currentCell[0]
+      j = currentCell[1] + 1
+      //check if maze location is not a wall
+      if maze[i][j] != 1 then
+        //mark as explored
+        maze[i][j] = 2
+        //update current cell
+        currentCell = {i, j}
+      endif
+    default:
+      //handle error
+      print("error")
+  endswitch
+endprocedure

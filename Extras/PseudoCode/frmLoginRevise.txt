@@ -1,0 +1,62 @@
+procedure timeout()
+  //set tfOutput colour to red
+  tfOutput.setTextColour(red)
+
+  //repeat for an n number of seconds
+  for i=0 to time
+    //dynamically update the output
+    tfOutput.setText("You have been timed out for " + str(time-i) + " seconds")
+    //start a 1 second timer
+    Timer timer = new Timer(1000)
+    timer.start()
+  next i
+  //clear the output text after finished
+  tfOutput.setText("")
+endprocedure
+
+//validate submitted details
+procedure btnSubmit()
+  //get text box values
+  userEnter = ""
+  passEnter = ""
+  userEnter = tfUser.getText()
+  passEnter = tfPass.getText()
+  
+  //set tfOutput colour to red
+  tfOutput.setTextColour(red)
+
+  //validate details
+  isValid = validateDetails(userEnter, passEnter)
+  if isValid then
+    //close login and allow access into menus
+    FrmLogin.close()
+    FrmMainMenu menu = new FrmMainMenu()
+  else
+    if attempts > 0 then
+      attempts = attempts - 1
+      tfOutput.setText("Username or Password incorrect - " + attempts + " attempts remaining")
+    else
+      //timeout user for 30 seconds if 0 attempts then reset attempts
+      timeout()
+      attempts = 3
+    endif
+  endif
+  //clear details once finished ready for next attempt
+  tfUser.setText("")
+  tfPass.setText("")
+endprocedure
+
+procedure selectAllOnClick()
+  //add mouse listeners to monitor mouse clicks
+  tfUser.addMouseListener()
+  tfPass.addMouseListener()
+  
+  //select all text in the username box
+  if (mouseClicked(tfUser)) then
+    tfUser.selectAllText()
+  endif
+  //select all text in the password box
+  if (mouseClicked(tfPass)) then
+    tfPass.selectAllText()
+  endif
+endprocedure

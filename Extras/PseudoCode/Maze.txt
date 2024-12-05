@@ -1,0 +1,56 @@
+procedure generateMaze(maze)
+  //initialize the maze as a grid filled with walls
+  for i=0 to maze.length
+    for j=0 to maze[i].length
+      //set each cell to be a wall
+      maze[i][j] = 1
+    next j
+  next i
+
+  //initialise a linked list to store the potential paths
+  potentialPaths = ()
+  //random co ords
+  start = random(maze.length)
+  end = random(maze[i].length)
+  //start with a single path at a random location
+  //random starting and end reference
+  potentialPaths.append({start, end, start, end})
+
+ //iterate until all cells are in the maze
+ while potentialPaths.length != 0
+   //remove random path from the list
+   path = remove(potentialPaths, random(potentialPaths.length))
+   //assign co ordinates from current removed path
+   x1 = path[0]
+   y2 = path[1]
+   x2 = path[2]
+   y2 = path[3]
+
+   //if the cell is a wall, carve a path and add new potential paths
+   if maze[x2][y2] == 1 then
+     //carve a path - 0 is a path
+     maze[x1][y1] = maze[x2][y2] = 0
+
+     //check the four directions around the cell
+     if x2 >= 2 AND maze[x2 - 2][y2] == 1 then
+       //add new connected potential path to the north
+       potentialPaths.append({x2 - 1, y2, x2 - 2, y2})
+     endif
+     if y2 >= 2 AND maze[x2][y2 - 2] == 1 then
+       //add new connected potential path to the west
+       potentialPaths.append({x2, y2 - 1, x2, y2 - 2})
+     endif
+     if x2 < maze.length - 2 AND maze[x2 + 2][y2] == 1 then
+       //add new connected potential path to the south
+       potentialPaths.append({x2 + 1, y2, x2 + 2, y2})
+     endif
+     if y2 < maze[i].length - 2 AND maze[x2][y2 + 2] == 1 then
+       //add connected new potential path to the east
+       potentialPaths.append({x2, y2 + 1, x2, y2 + 2})
+     endif
+   endif
+ endwhile
+
+ //return the generated maze after potential paths is empty - (complete maze)
+ return maze
+endfunction

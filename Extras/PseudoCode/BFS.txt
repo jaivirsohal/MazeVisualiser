@@ -1,0 +1,34 @@
+procedure BFS(maze, startX, startY)
+  //initialize the visited array and the queue
+  visited = arr[maze.length][maze[0].length]
+  queue = []
+
+  //enqueue the start point into the queue
+  queue.enqueue([startX, startY])
+
+  //while the queue is not empty
+  while queue.length != 0
+     //dequeue and retrieve cell from the queue
+     [currentX, currentY] = queue.dequeue()
+     
+     //check if the cell is valid and unvisited
+     if currentX >= 0 and currentX < maze.length and currentY >= 0 and currentY < maze[0].length and current != visited[currentX][currentY] then
+        //mark the cell as visited
+        visited[currentX][currentY] = true
+
+        //try to move in all possible directions (up,down,left,right)
+        foreach direction in {{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
+           newX = currentX + direction[0]
+           newY = currentY + direction[1]
+
+           //if the new cell is valid and unvisited, enqueue it into the queue
+           if newX >= 0 and newX < maze.length and newY >= 0 and newY < maze[0].length and new != visited[newX][newY] then
+              queue.enqueue([newX, newY])
+           endif
+        next direction
+     endif
+  endwhile
+
+  //return the visited array (solved)
+  return visited
+endprocedure
