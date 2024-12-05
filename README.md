@@ -8,3 +8,4 @@
 
 -The program also offers a maze game with a timed leaderboard.
 
+![image](https://github.com/user-attachments/assets/419fa8f6-78ad-4d7f-bbd5-8a244f305b43)
