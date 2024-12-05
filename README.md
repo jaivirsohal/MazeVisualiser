@@ -10,7 +10,7 @@
 
 Preview:
 
-Comparision:
+
 ![image](https://github.com/user-attachments/assets/419fa8f6-78ad-4d7f-bbd5-8a244f305b43)
 
 ![image](https://github.com/user-attachments/assets/6b40e00e-7f1d-49b3-b284-fd9b5e4edede)
